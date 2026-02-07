@@ -2,7 +2,7 @@
 
 ![Summary of Intro Neural Networks content in a doodle](../sketchnotes/ai-neuralnetworks.png)
 
-As we discussed in the introduction, one of the ways to achieve intelligence is to train a **computer model** or an **artificial brain**. Since the middle of 20th century, researchers tried different mathematical models, until in recent years this direction proved to by hugely successful. Such mathematical models of the brain are called **neural networks**.
+As we discussed in the introduction, one of the ways to achieve intelligence is to train a **computer model** or an **artificial brain**. Since the middle of 20th century, researchers tried different mathematical models, until in recent years this direction proved to be hugely successful. Such mathematical models of the brain are called **neural networks**.
 
 > Sometimes neural networks are called *Artificial Neural Networks*, ANNs, in order to indicate that we are talking about models, not real networks of neurons.
 
@@ -25,7 +25,7 @@ In this curriculum, we will only focus on neural network models.
 
 ## A Model of a Neuron
 
-From biology we know that our brain consists of neural cells, each of them having multiple "inputs" (axons), and an output (dendrite). Axons and dendrites can conduct electrical signals, and connections between axons and dendrites can exhibit different degrees of conductivity (controlled by neuromediators).
+From biology, we know that our brain consists of neural cells (neurons), each of them having multiple "inputs" (dendrites) and a single "output" (axon). Both dendrites and axons can conduct electrical signals, and the connections between them — known as synapses — can exhibit varying degrees of conductivity, which are regulated by neurotransmitters.
 
 ![Model of a Neuron](images/synapse-wikipedia.jpg) | ![Model of a Neuron](images/artneuron.png)
 ----|----
