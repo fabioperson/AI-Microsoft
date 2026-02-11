@@ -38,6 +38,8 @@ jupyterhub
 ```
 You then can navigate to any of the `.ipynb` files, open them and start working.
 
+> **Tip**: Start by running [setup-check.ipynb](./setup-check.ipynb) to verify that all required libraries are installed.
+
 ### Running in container
 
 One alternative to Python installation would be to run the code in a container. Since our repository supplies a special `.devcontainer` folder that instructs how to build a container for this repo, VS Code offers the opportunity to re-open the code in a container. This will require Docker installation, and also would be more complex, so we recommend this to more experienced users.
