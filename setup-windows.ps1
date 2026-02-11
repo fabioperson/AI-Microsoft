@@ -28,6 +28,17 @@ if (-not $python) {
 $pythonVersion = python --version 2>&1
 Write-Host "[OK] $pythonVersion found" -ForegroundColor Green
 
+# Warn if Python version is too new for some packages
+$versionMatch = [regex]::Match($pythonVersion, '(\d+)\.(\d+)')
+if ($versionMatch.Success) {
+    $major = [int]$versionMatch.Groups[1].Value
+    $minor = [int]$versionMatch.Groups[2].Value
+    if ($major -ge 3 -and $minor -ge 14) {
+        Write-Host "[!] Python $major.$minor detected. Some packages may need newer versions." -ForegroundColor Yellow
+        Write-Host "    This project uses pygame-ce (Community Edition) for compatibility." -ForegroundColor Yellow
+    }
+}
+
 # Check pip
 $pip = Get-Command pip -ErrorAction SilentlyContinue
 if (-not $pip) {
