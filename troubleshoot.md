@@ -101,7 +101,31 @@ This guide helps you resolve common issues encountered while using or contributi
    jupyter notebook
    ```
 
-### 4. Dependency Version Conflicts
+### 4. TensorFlow Not Available for Python 3.13+
+
+**Background:** TensorFlow does not yet publish builds for Python 3.13 or newer.
+
+**Symptoms:**
+- Error: `Could not find a version that satisfies the requirement tensorflow>=2.17.0`
+- Error: `No matching distribution found for tensorflow>=2.17.0`
+
+**Possible Causes:**
+- You are running Python 3.13 or 3.14, which TensorFlow does not support yet.
+
+**Solutions:**
+1. **Install Python 3.12 alongside your current version.**
+   Download Python 3.12 from [python.org](https://www.python.org/downloads/) and create a virtual environment with it:
+   ```bash
+   py -3.12 -m venv venv
+   venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. **Skip TensorFlow lessons.**
+   The `requirements.txt` uses version markers so `pip install -r requirements.txt` will succeed, but lessons that depend on TensorFlow/Keras will not work without it.
+
+---
+
+### 5. Dependency Version Conflicts
 
 **Background:** Projects can break if package versions are mismatched.
 
@@ -125,7 +149,7 @@ This guide helps you resolve common issues encountered while using or contributi
 
 ## Configuration Issues
 
-### 5. Environment Variables Not Set
+### 6. Environment Variables Not Set
 
 **Background:** Some modules may require keys, tokens, or config settings.
 
@@ -144,7 +168,7 @@ This guide helps you resolve common issues encountered while using or contributi
 
 ## Running Notebooks
 
-### 6. Notebook Will Not Open or Run
+### 7. Notebook Will Not Open or Run
 
 **Background:** Jupyter notebooks need proper setup.
 
@@ -161,7 +185,7 @@ This guide helps you resolve common issues encountered while using or contributi
 2. **Open notebooks manually.**
    - Copy the URL from terminal (e.g., `http://localhost:8888/?token=...`) and paste it into your browser.
 
-### 7. Kernel Crashing or Freezing
+### 8. Kernel Crashing or Freezing
 
 **Background:** Notebook kernels can crash due to resource limits or code errors.
 
@@ -185,7 +209,7 @@ This guide helps you resolve common issues encountered while using or contributi
 
 ## Performance Problems
 
-### 8. Notebooks Running Slowly
+### 9. Notebooks Running Slowly
 
 **Background:** Some AI tasks require significant memory and CPU.
 
@@ -209,7 +233,7 @@ This guide helps you resolve common issues encountered while using or contributi
 
 ## Textbook Website Problems
 
-### 9. Chapter Not Loading
+### 10. Chapter Not Loading
 
 **Background:** The online textbook displays lessons and chapters.
 
@@ -229,7 +253,7 @@ This guide helps you resolve common issues encountered while using or contributi
 
 ## Contributing Issues
 
-### 10. PR Not Accepted or Builds Failing
+### 11. PR Not Accepted or Builds Failing
 
 **Background:** Contributions must pass tests and follow guidelines.
 

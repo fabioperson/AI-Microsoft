@@ -33,8 +33,14 @@ $versionMatch = [regex]::Match($pythonVersion, '(\d+)\.(\d+)')
 if ($versionMatch.Success) {
     $major = [int]$versionMatch.Groups[1].Value
     $minor = [int]$versionMatch.Groups[2].Value
+    if ($major -ge 3 -and $minor -ge 13) {
+        Write-Host "[!] Python $major.$minor detected." -ForegroundColor Yellow
+        Write-Host "    TensorFlow does not yet support Python $major.$minor." -ForegroundColor Yellow
+        Write-Host "    TensorFlow and TensorBoard will be skipped." -ForegroundColor Yellow
+        Write-Host "    Lessons that use TensorFlow/Keras will not work." -ForegroundColor Yellow
+        Write-Host "    To use all lessons, install Python 3.12 from https://www.python.org/downloads/" -ForegroundColor Yellow
+    }
     if ($major -ge 3 -and $minor -ge 14) {
-        Write-Host "[!] Python $major.$minor detected. Some packages may need newer versions." -ForegroundColor Yellow
         Write-Host "    This project uses pygame-ce (Community Edition) for compatibility." -ForegroundColor Yellow
     }
 }
