@@ -1,15 +1,16 @@
 <template>
   <div>
-    <nav>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <nav aria-label="Main navigation">
       <ul>
         <li>
           <router-link class="navlink" to="/">Home</router-link>
         </li>
         <li>
-          <label for="locale">locale</label>
+          <label for="locale-select">locale</label>
         </li>
         <li>
-          <select v-model="locale">
+          <select id="locale-select" v-model="locale" aria-label="Select language">
             <option>en</option>
             <option>es</option>
           </select>
@@ -17,12 +18,9 @@
         <li class="title">{{ questions[locale][0].title }}</li>
       </ul>
     </nav>
-    <div id="app">
-      
-      <router-view>
-        <Quiz />
-      </router-view>
-    </div>
+    <main id="main-content">
+      <router-view />
+    </main>
   </div>
 </template>
 
@@ -36,7 +34,6 @@ export default {
     questions() {
       return messages;
     },
-    
   },
   i18n: { messages },
   components: {
@@ -81,22 +78,38 @@ nav a {
   text-align: right;
 }
 
-ul{
+ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 li {
-  float: left;
+  margin-right: 0.5em;
 }
 
 .title {
-  color:white;
+  color: white;
   font-weight: bold;
   font-size: x-large;
-  float: right;
+  margin-left: auto;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #252d4a;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 .link {
@@ -110,13 +123,22 @@ h3,
   text-align: center;
 }
 .error {
-  color: red;
+  color: #c62828;
+  font-weight: bold;
+}
+.error::before {
+  content: "\2717 ";
 }
 .complete {
-  color: green;
+  color: #2e7d32;
+  font-weight: bold;
+}
+.complete::before {
+  content: "\2713 ";
 }
 .card {
-  width: 60%;
+  width: 90%;
+  max-width: 700px;
   border: #252d4a solid;
   border-radius: 5px;
   margin: auto;
@@ -128,18 +150,48 @@ h3,
   text-align: center;
   cursor: pointer;
   margin-bottom: 5px;
-  width: 50%;
-  font-size: 16px;
+  width: 100%;
+  max-width: 500px;
   color: #ffffff;
   background-color: #252d4a;
   border-radius: 5px;
-  padding: 5px;
+  border: 2px solid #252d4a;
+  padding: 8px 12px;
   justify-content: flex-start;
   align-items: center;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.btn:hover {
+  background-color: #3a4672;
+  border-color: #3a4672;
+}
+.btn:focus {
+  outline: 2px solid #5c6bc0;
+  outline-offset: 2px;
+}
+.btn:active {
+  background-color: #1a1f36;
 }
 .ans-btn {
   justify-content: center;
   display: flex;
   margin: 4px auto;
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: 95%;
+    padding: 0.75em;
+  }
+  .btn {
+    min-width: 80%;
+    width: 100%;
+  }
+  .title {
+    font-size: large;
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0.5em;
+  }
 }
 </style>

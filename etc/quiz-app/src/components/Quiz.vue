@@ -2,31 +2,39 @@
   <div class="card">
     <div v-for="q in questions[currLocale]" :key="q.quizzes[0].id">
       <div v-for="quiz in q.quizzes" :key="quiz.id">
-        
+
         <div v-if="route == quiz.id">
-          <div>
+          <div aria-live="polite">
             <h3 v-if="complete" class="message complete">{{ q.complete }}</h3>
             <div v-else>
               <h3 v-if="error" class="error">{{ q.error }}</h3>
             </div>
+          </div>
 
-            <h1>{{quiz.title}}</h1>
+          <h1>{{ quiz.title }}</h1>
 
+          <div v-if="!complete">
+            <p class="progress" aria-label="Quiz progress">
+              Question {{ currentQuestion + 1 }} of {{ quiz.quiz.length }}
+            </p>
 
             <h2>
               {{ quiz.quiz[currentQuestion].questionText }}
             </h2>
-            <div>
+            <div role="group" aria-label="Answer options">
               <button
                 :key="index"
                 v-for="(option, index) in quiz.quiz[currentQuestion]
                   .answerOptions"
-                @click="handleAnswerClick(option.isCorrect)"
+                @click="handleAnswerClick(option.isCorrect, quiz.quiz.length)"
                 class="btn ans-btn"
               >
                 {{ option.answerText }}
               </button>
             </div>
+          </div>
+          <div v-else class="message">
+            <button @click="resetQuiz" class="btn reset-btn">Try Again</button>
           </div>
         </div>
       </div>
@@ -45,7 +53,6 @@ export default {
       complete: false,
       error: false,
       route: "",
-      locale: "",
     };
   },
   computed: {
@@ -54,7 +61,7 @@ export default {
     },
     currLocale() {
       return this.$root.$i18n.locale;
-    }
+    },
   },
 
   i18n: {
@@ -62,12 +69,11 @@ export default {
   },
 
   methods: {
-    handleAnswerClick(isCorrect) {
+    handleAnswerClick(isCorrect, totalQuestions) {
       this.error = false;
       let nextQuestion = this.currentQuestion + 1;
       if (isCorrect) {
-        //always 3 questions per quiz
-        if (nextQuestion < 3) {
+        if (nextQuestion < totalQuestions) {
           this.currentQuestion = nextQuestion;
         } else {
           this.complete = true;
@@ -76,14 +82,27 @@ export default {
         this.error = true;
       }
     },
+    resetQuiz() {
+      this.currentQuestion = 0;
+      this.complete = false;
+      this.error = false;
+    },
   },
   created() {
     this.route = this.$route.params.id;
-    if (this.$route.query.loc) {
-      this.locale = this.$route.query.loc;
-    } else {
-      this.locale = "en";
-    }
   },
 };
 </script>
+
+<style scoped>
+.progress {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 0.5em;
+}
+.reset-btn {
+  margin-top: 1em;
+  max-width: 200px;
+}
+</style>
