@@ -14,14 +14,20 @@
           <h1>{{ quiz.title }}</h1>
 
           <div v-if="!complete">
-            <p class="progress" aria-label="Quiz progress">
+            <div class="progress-bar-container">
+              <div
+                class="progress-bar-fill"
+                :style="{ width: ((currentQuestion) / quiz.quiz.length) * 100 + '%' }"
+              ></div>
+            </div>
+            <p class="progress-text" aria-label="Quiz progress">
               Question {{ currentQuestion + 1 }} of {{ quiz.quiz.length }}
             </p>
 
             <h2>
               {{ quiz.quiz[currentQuestion].questionText }}
             </h2>
-            <div role="group" aria-label="Answer options">
+            <div role="group" aria-label="Answer options" class="answer-group">
               <button
                 :key="index"
                 v-for="(option, index) in quiz.quiz[currentQuestion]
@@ -29,12 +35,14 @@
                 @click="handleAnswerClick(option.isCorrect, quiz.quiz.length)"
                 class="btn ans-btn"
               >
+                <span class="answer-letter">{{ String.fromCharCode(65 + index) }}</span>
                 {{ option.answerText }}
               </button>
             </div>
           </div>
-          <div v-else class="message">
+          <div v-else class="complete-actions">
             <button @click="resetQuiz" class="btn reset-btn">Try Again</button>
+            <router-link to="/" class="btn home-btn">All Quizzes</router-link>
           </div>
         </div>
       </div>
@@ -95,14 +103,88 @@ export default {
 </script>
 
 <style scoped>
-.progress {
-  text-align: center;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 0.5em;
+.progress-bar-container {
+  width: 100%;
+  max-width: 500px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  margin: 1rem auto 0.5rem;
+  overflow: hidden;
 }
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.answer-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ans-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.answer-letter {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(79, 70, 229, 0.1);
+  color: #4f46e5;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.ans-btn:hover .answer-letter {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.complete-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
 .reset-btn {
-  margin-top: 1em;
-  max-width: 200px;
+  max-width: 240px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #6d28d9);
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+}
+
+.home-btn {
+  max-width: 240px;
 }
 </style>
